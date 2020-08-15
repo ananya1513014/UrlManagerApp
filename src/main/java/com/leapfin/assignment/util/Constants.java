@@ -1,17 +1,10 @@
 package com.leapfin.assignment.util;
 
 public class Constants {
-    public static final String NAME = "name";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
-    public static final String PHONE = "phone";
-    public static final String GENDER = "gender";
-    public static final String DOB = "dateOfBirth";
     public static final String TOKEN = "token";
     public static final String USER_ENDPOINT = "api/v1/user";
-    public static final String DB_URL = "";
-    public static final String DB_USER = "";
-    public static final String DB_PASSWORD = "";
     public static final String DB_URL_PARAM_KEY = "dbUrl";
     public static final String DB_USER_PARAM_KEY = "dbUser";
     public static final String DB_PASSWORD_PARAM_KEY = "dbPass";

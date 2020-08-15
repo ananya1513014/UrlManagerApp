@@ -7,6 +7,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,8 +51,8 @@ public class TokenService {
         return saveAuthToken(new AuthToken(email, builder.compact())).getToken();
     }
 
-    public boolean authorize(String email, String token) {
-        return tokenRepo.findByEmail(email).getToken().equals(token);
+    public void authorize(String email, String token) throws AssertionError{
+        Assert.assertTrue(tokenRepo.findByEmail(email).getToken().equals(token));
     }
 
     public String getUserId(String jwt) {
