@@ -1,12 +1,11 @@
 package com.leapfin.assignment.config;
-/*
-import com.bmk.Auth.util.Constants;
+
+import com.leapfin.assignment.util.Constants;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.cloud.aws.core.region.RegionProvider;
 import org.springframework.cloud.aws.core.region.StaticRegionProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 
@@ -26,4 +25,4 @@ public class DatabaseConfig {
     public RegionProvider regionProvider() {
         return new StaticRegionProvider(System.getenv(Constants.DB_REGION_PARAM_KEY));
     }
-}*/
+}

@@ -2,6 +2,7 @@ package com.leapfin.assignment.service;
 
 import com.leapfin.assignment.bo.User;
 import com.leapfin.assignment.repository.UserRepo;
+import com.leapfin.assignment.util.Constants;
 import com.leapfin.assignment.util.Security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,8 +11,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private static UserRepo userRepo;
-    private final static String SECRET_KEY = "anan";
-    private final static long ttlMillis = 1000000000;
+    private final static String AES_SECRET = System.getenv(Constants.AES_SECRET_PARAM_KEY);
 
     @Autowired
     public UserService(UserRepo userRepo){
@@ -25,10 +25,7 @@ public class UserService {
     }
 
     public boolean verifyCred(String email, String password) {
-        System.out.println("Verifying creds");
-        System.out.println(password);
-        System.out.println("Foundz:" + userRepo.findByEmail(email).toString());
-        return userRepo.findByEmail(email).getPassword().equals(Security.encrypt(password, "sec"));
+        return userRepo.findByEmail(email).getPassword().equals(Security.encrypt(password, AES_SECRET));
     }
 
     public Long getStaticUserId(String userId) {

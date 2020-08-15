@@ -25,6 +25,7 @@ import java.util.Map;
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private final static String AES_SECRET = System.getenv(Constants.AES_SECRET_PARAM_KEY);
     private final UserService userService;
     private final TokenService tokenService;
     private final PortfolioService portfolioService;
@@ -43,7 +44,7 @@ public class UserController {
         Response response = new Response();
         HashMap<String, Object> map = new HashMap<>();
         try{
-            User user = new User(userInfoMap.get(Constants.EMAIL), Security.encrypt(userInfoMap.get(Constants.PASSWORD), "sec"));
+            User user = new User(userInfoMap.get(Constants.EMAIL), Security.encrypt(userInfoMap.get(Constants.PASSWORD), AES_SECRET));
             user = userService.addUser(user);
             portfolioService.createPortfolio(user.getStaticUserId());
             map.put("username", user.getEmail());
@@ -80,28 +81,6 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
         } catch (Exception exp){
-            response.setResponseCode(Constants.INVALID_CREDS_RESPONSE_CODE);
-            response.setMessage(Constants.INVALID_CREDS_MESSAGE);
-            map.put("Exception", exp);
-            response.setObjectMap(map);
-            return  ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(response);
-        }
-    }
-
-    @GetMapping(value = "/authorize")
-    private ResponseEntity authorize(@RequestBody String param) throws JsonProcessingException {
-        logger.info(param, " Authorize");
-        Map<String, String> userInfoMap = new ObjectMapper().readValue(param, Map.class);
-        Response response = new Response();
-        HashMap<String, Object> map = new HashMap<>();
-        try{
-            map.put("isAuthorized", tokenService.authorize(userInfoMap.get(Constants.EMAIL), userInfoMap.get(Constants.TOKEN)));
-            response.setResponseCode(Constants.SUCCESS_RESPONSE_CODE);
-            response.setMessage(Constants.SUCCESS_MESSAGE);
-            response.setObjectMap(map);
-            return ResponseEntity.ok(response);
-        } catch (Exception exp){
-            logger.info(exp.toString());
             response.setResponseCode(Constants.INVALID_CREDS_RESPONSE_CODE);
             response.setMessage(Constants.INVALID_CREDS_MESSAGE);
             map.put("Exception", exp);

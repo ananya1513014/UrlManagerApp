@@ -26,4 +26,5 @@ public class Constants {
     public static final String SEPARATOR = ",";
     public static final String URL_ENDPOINT = "api/v1/url";
     public static final String URL = "url";
+    public static final String AES_SECRET_PARAM_KEY = "aesSecret";
 }
