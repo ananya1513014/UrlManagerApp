@@ -53,11 +53,9 @@ public class UserController {
             return ResponseEntity.ok(new Response("200", "Sign up success", responseObjectMap));
         } catch (DuplicateUserException exp){
             logger.info("Duplicate User Exception encountered for : ", param);
-            responseObjectMap.put("Exception", exp);
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new Response("412", "User exists with the specified ID", responseObjectMap));
         } catch (JsonProcessingException e) {
             logger.info("Json Processing Exception encountered for : ", param);
-            responseObjectMap.put("Exception", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("400", "Request format is wrong", responseObjectMap));
         }
     }
